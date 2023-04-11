@@ -1,6 +1,6 @@
 # Plano de Testes API Serverest
 
-Este documento descreve o plano de testes da API Serverest utilizando a biblioteca RestAssured e o framework JUnit.
+Este documento descreve o plano de testes da API Serverest utilizando Java com a biblioteca RestAssured e o framework JUnit.
 
 ## Objetivo
 
