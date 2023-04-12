@@ -39,12 +39,5 @@ public class TestaCadastraProduto extends TesteBase {
         delaProdutoPorId(token, id);
     }
 
-    private static void delaProdutoPorId(String token, String id) {
-        given()
-                .header(AUTENTICACAO, token)
-        .when()
-                .delete(DELETA_PRODUTOS_ENDPOINT+ id)
-        .then()
-                .statusCode(HttpStatus.SC_OK);
-    }
+
 }

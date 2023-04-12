@@ -29,24 +29,4 @@ public class TestaDeleteProdutoPorId extends TesteBase {
                 .statusCode(HttpStatus.SC_OK);
     }
 
-    private static String idDoCadastroProduto(String token) {
-        Faker produtoFake = new Faker(new Locale("pt-br"));
-        Map<String,String> produto = new HashMap<>();
-        produto.put("nome",produtoFake.leagueOfLegends().champion());
-        produto.put("preco",produtoFake.number().digit());
-        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
-        produto.put("quantidade",produtoFake.number().digit());
-
-
-        String id = given()
-                .contentType(ContentType.JSON)
-                .header(AUTENTICACAO, token)
-                .body(produto)
-                .when()
-                .post(CADASTRA_PRODUTOS_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract().path("_id");
-        return id;
-    }
 }

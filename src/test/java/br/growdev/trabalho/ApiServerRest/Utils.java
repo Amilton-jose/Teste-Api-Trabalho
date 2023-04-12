@@ -29,7 +29,6 @@ public class Utils extends TesteBase {
     public static final String PUT_PRODUTOS_PORID_ENDPOINT = "/produtos/";
     public static final String LOGIN_ENDPOINT = "/login";
     public static final String AUTENTICACAO = "authorization";
-    public static String token = pegaToken();
 
     public static String idDoCadastroUsuario() {
         Faker faker = new Faker(new Locale("pt-br"));
@@ -50,28 +49,6 @@ public class Utils extends TesteBase {
                 .body("message", is("Cadastro realizado com sucesso"))
                 .extract().path("_id");
     }
-
-    public static String idDoCadastroProduto(String token) {
-        Faker produtoFake = new Faker(new Locale("pt-br"));
-        Map<String,String> produto = new HashMap<>();
-        produto.put("nome",produtoFake.leagueOfLegends().champion());
-        produto.put("preco",produtoFake.number().digit());
-        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
-        produto.put("quantidade",produtoFake.number().digit());
-
-
-        String id = given()
-                .contentType(ContentType.JSON)
-                .header(AUTENTICACAO, token)
-                .body(produto)
-                .when()
-                .post(CADASTRA_PRODUTOS_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract().path("_id");
-        return id;
-    }
-
 
     public static String pegaToken() {
         Login loginValido = retornaLoginValido();
@@ -121,7 +98,34 @@ public class Utils extends TesteBase {
                 .when()
                 .delete(DELETA_PRODUTOS_ENDPOINT+ id)
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_OK);
+    }
+    public static void delaProdutoPorId(String token, String id) {
+        given()
+                .header(AUTENTICACAO, token)
+                .when()
+                .delete(DELETA_PRODUTOS_ENDPOINT+ id)
+                .then()
+                .statusCode(HttpStatus.SC_OK);
+    }
+    public static String idDoCadastroProduto(String token) {
+        Faker produtoFake = new Faker(new Locale("pt-br"));
+        Map<String,String> produto = new HashMap<>();
+        produto.put("nome",produtoFake.leagueOfLegends().champion());
+        produto.put("preco",produtoFake.number().digits(3));
+        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
+        produto.put("quantidade",produtoFake.number().digits(3));
+
+
+        String id = given()
+                .contentType(ContentType.JSON)
+                .header(AUTENTICACAO, token)
+                .body(produto)
+                .when()
+                .post(CADASTRA_PRODUTOS_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract().path("_id");
+        return id;
     }
 }
