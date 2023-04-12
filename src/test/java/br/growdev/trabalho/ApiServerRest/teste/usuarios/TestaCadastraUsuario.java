@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 public class TestaCadastraUsuario extends TesteBase {
 
     @Test()
-    public void testeCadastraUsuarioDadosValidos() {
+    public void testeCadastraUsuarioDadosValido() {
         Faker faker = new Faker(new Locale("pt-br"));
 
         Usuario criaUsuario = new Usuario();
