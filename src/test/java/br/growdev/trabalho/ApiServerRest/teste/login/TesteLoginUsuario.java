@@ -1,25 +1,24 @@
 package br.growdev.trabalho.ApiServerRest.teste.login;
 
 import br.growdev.trabalho.ApiServerRest.dominio.Login;
-import br.growdev.trabalho.ApiServerRest.dominio.Usuario;
 import br.growdev.trabalho.ApiServerRest.teste.TesteBase;
-import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import static br.growdev.trabalho.ApiServerRest.Utils.*;
+import static br.growdev.trabalho.ApiServerRest.Utils.LOGIN_ENDPOINT;
+import static br.growdev.trabalho.ApiServerRest.Utils.retornaLoginValido;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.is;
 
 
 public class TesteLoginUsuario extends TesteBase {
-
 
     @Test
     public void testeLoginValido() {
@@ -54,34 +53,6 @@ public class TesteLoginUsuario extends TesteBase {
     }
 
     
-    private static Login retornaLoginValido() {
-        Faker faker = new Faker(new Locale("pt-br"));
 
-        Usuario criaUsuario = new Usuario();
-        criaUsuario.setNome(faker.address().firstName());
-        criaUsuario.setEmail(faker.internet().emailAddress());
-        criaUsuario.setPassword(faker.internet().password());
-        criaUsuario.setAdministrador("true");
-
-        String id = given()
-                .contentType(ContentType.JSON)
-                .body(criaUsuario)
-                .when()
-                .post(CADASTRA_USUARIO_ENDPOINT)
-                .then()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .statusCode(HttpStatus.SC_CREATED)
-                .extract().path("_id");
-
-        return  when()
-                .get(BUSCA_USUARIO_PORID_ENDPOINT+id)
-                .then()
-                .log().all()
-                .extract()
-                .as(Login.class);
-
-
-    }
 
 }

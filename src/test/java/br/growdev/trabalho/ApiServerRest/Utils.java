@@ -64,7 +64,7 @@ public class Utils extends TesteBase {
                 .extract().path(AUTENTICACAO);
     }
 
-    private static Login retornaLoginValido() {
+    public static Login retornaLoginValido() {
         Faker faker = new Faker(new Locale("pt-br"));
 
         Usuario criaUsuario = new Usuario();
@@ -96,25 +96,27 @@ public class Utils extends TesteBase {
         given()
                 .header(AUTENTICACAO, token)
                 .when()
-                .delete(DELETA_PRODUTOS_ENDPOINT+ id)
+                .delete(DELETA_PRODUTOS_ENDPOINT + id)
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
+
     public static void delaProdutoPorId(String token, String id) {
         given()
                 .header(AUTENTICACAO, token)
                 .when()
-                .delete(DELETA_PRODUTOS_ENDPOINT+ id)
+                .delete(DELETA_PRODUTOS_ENDPOINT + id)
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
+
     public static String idDoCadastroProduto(String token) {
         Faker produtoFake = new Faker(new Locale("pt-br"));
-        Map<String,String> produto = new HashMap<>();
-        produto.put("nome",produtoFake.leagueOfLegends().champion());
-        produto.put("preco",produtoFake.number().digits(3));
-        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
-        produto.put("quantidade",produtoFake.number().digits(3));
+        Map<String, String> produto = new HashMap<>();
+        produto.put("nome", produtoFake.leagueOfLegends().champion());
+        produto.put("preco", produtoFake.number().digits(3));
+        produto.put("descricao", produtoFake.leagueOfLegends().summonerSpell());
+        produto.put("quantidade", produtoFake.number().digits(3));
 
 
         String id = given()
