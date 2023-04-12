@@ -10,13 +10,13 @@ import org.junit.Test;
 import java.util.Locale;
 
 import static br.growdev.trabalho.ApiServerRest.Utils.BUSCA_USUARIO_PORID_ENDPOINT;
-import static br.growdev.trabalho.ApiServerRest.Utils.cadastraUsuario;
+import static br.growdev.trabalho.ApiServerRest.Utils.idDoCadastroUsuario;
 import static io.restassured.RestAssured.given;
 
 public class TestaPutUsuarioPorId extends TesteBase {
     @Test
     public void testaPutUsuarioPorIdValido() {
-        String id = cadastraUsuario();
+        String id = idDoCadastroUsuario();
         Faker usuarioFaker = new Faker(new Locale("pt-bt"));
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioFaker.address().firstName());
@@ -36,7 +36,7 @@ public class TestaPutUsuarioPorId extends TesteBase {
 
     @Test
     public void testaPutUsuarioPorIdInvalido() {
-        String id = cadastraUsuario();
+        String id = idDoCadastroUsuario();
         Faker usuarioFaker = new Faker(new Locale("pt-bt"));
         Usuario usuario = new Usuario();
         usuario.setNome("Amiltontestput");

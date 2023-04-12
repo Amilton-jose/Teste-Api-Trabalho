@@ -1,11 +1,13 @@
 package br.growdev.trabalho.ApiServerRest.teste.produtos;
 
 import br.growdev.trabalho.ApiServerRest.teste.TesteBase;
+import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static br.growdev.trabalho.ApiServerRest.Utils.*;
@@ -28,11 +30,12 @@ public class TestaDeleteProdutoPorId extends TesteBase {
     }
 
     private static String idDoCadastroProduto(String token) {
+        Faker produtoFake = new Faker(new Locale("pt-br"));
         Map<String,String> produto = new HashMap<>();
-        produto.put("nome","Mouse Lixnu");
-        produto.put("preco","1997");
-        produto.put("descricao","Gamer RGB");
-        produto.put("quantidade","1997");
+        produto.put("nome",produtoFake.leagueOfLegends().champion());
+        produto.put("preco",produtoFake.number().digit());
+        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
+        produto.put("quantidade",produtoFake.number().digit());
 
 
         String id = given()

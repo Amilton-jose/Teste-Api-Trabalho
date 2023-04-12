@@ -1,11 +1,13 @@
 package br.growdev.trabalho.ApiServerRest.teste.produtos;
 
 import br.growdev.trabalho.ApiServerRest.teste.TesteBase;
+import com.github.javafaker.Faker;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static br.growdev.trabalho.ApiServerRest.Utils.*;
@@ -16,18 +18,19 @@ public class TestaPutProdutoPorId extends TesteBase {
     @Test
     public void testaPutProdutoPorId(){
         String token = pegaToken();
-        String id = idCadastroProduto(token);
+        String id = idDoCadastroProduto(token);
 
-        Map<String,String> novoProduto = new HashMap<>();
-        novoProduto.put("nome","Mouse Put novo");
-        novoProduto.put("preco","123456");
-        novoProduto.put("descricao","Gamer Put novo");
-        novoProduto.put("quantidade","3006");
+        Faker produtoFake = new Faker(new Locale("pt-br"));
+        Map<String,String> produto = new HashMap<>();
+        produto.put("nome",produtoFake.leagueOfLegends().champion());
+        produto.put("preco",produtoFake.number().digit());
+        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
+        produto.put("quantidade",produtoFake.number().digit());
 
         given()
                 .contentType(ContentType.JSON)
                 .header(AUTENTICACAO, token)
-                .body(novoProduto)
+                .body(produto)
         .when()
                 .put(PUT_PRODUTOS_PORID_ENDPOINT+id)
         .then()
@@ -39,22 +42,13 @@ public class TestaPutProdutoPorId extends TesteBase {
         deletaProdutoPorId(token, id);
     }
 
-    private static void deletaProdutoPorId(String token, String id) {
-        given()
-                .header(AUTENTICACAO, token)
-                .when()
-                .delete(DELETA_PRODUTOS_ENDPOINT+ id)
-                .then()
-                .log().all()
-                .statusCode(HttpStatus.SC_OK);
-    }
-
-    private static String idCadastroProduto(String token) {
+    private  String idDoCadastroProduto(String token) {
+        Faker produtoFake = new Faker(new Locale("pt-br"));
         Map<String,String> produto = new HashMap<>();
-        produto.put("nome","Mouse Lixnu");
-        produto.put("preco","1997");
-        produto.put("descricao","Gamer RGB");
-        produto.put("quantidade","1997");
+        produto.put("nome",produtoFake.leagueOfLegends().champion());
+        produto.put("preco",produtoFake.number().digit());
+        produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
+        produto.put("quantidade",produtoFake.number().digit());
 
 
         String id = given()
@@ -62,11 +56,12 @@ public class TestaPutProdutoPorId extends TesteBase {
                 .header(AUTENTICACAO, token)
                 .body(produto)
                 .when()
-                .post("/produtos")
+                .post(CADASTRA_PRODUTOS_ENDPOINT)
                 .then()
-                .log().all()
                 .statusCode(HttpStatus.SC_CREATED)
                 .extract().path("_id");
         return id;
     }
+
+
 }

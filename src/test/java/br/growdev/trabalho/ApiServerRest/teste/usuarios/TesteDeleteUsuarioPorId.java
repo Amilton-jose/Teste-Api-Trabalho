@@ -1,6 +1,5 @@
 package br.growdev.trabalho.ApiServerRest.teste.usuarios;
 
-import br.growdev.trabalho.ApiServerRest.Utils;
 import br.growdev.trabalho.ApiServerRest.teste.TesteBase;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
@@ -24,7 +23,7 @@ public class TesteDeleteUsuarioPorId extends TesteBase {
 
     @Test
     public  void deletaUsuarioPorIdValido(){
-        String id = cadastraUsuario();
+        String id = idDoCadastroUsuario();
         given()
                 .contentType(ContentType.JSON)
         .when()

@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public class TestaBuscaUsuarioPorId extends TesteBase {
     @Test
     public  void testaBuscaUsuarioPorId(){
-        String id = cadastraUsuario();
+        String id = idDoCadastroUsuario();
         Usuario usuario = given()
                 .contentType(ContentType.JSON)
                 .param("_id",id)
