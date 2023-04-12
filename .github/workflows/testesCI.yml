@@ -28,6 +28,4 @@ jobs:
         cache: maven
     - name: Instala as depêndencias
       run: mvn install
-    - name: Excuta os testes
-      run: mvn test
 
