@@ -100,16 +100,6 @@ public class Utils extends TesteBase {
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
-
-    public static void delaProdutoPorId(String token, String id) {
-        given()
-                .header(AUTENTICACAO, token)
-                .when()
-                .delete(DELETA_PRODUTOS_ENDPOINT + id)
-                .then()
-                .statusCode(HttpStatus.SC_OK);
-    }
-
     public static String idDoCadastroProduto(String token) {
         Faker produtoFake = new Faker(new Locale("pt-br"));
         Map<String, String> produto = new HashMap<>();

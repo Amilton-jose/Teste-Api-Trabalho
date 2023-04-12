@@ -22,10 +22,10 @@ public class TestaPutProdutoPorId extends TesteBase {
 
         Faker produtoFake = new Faker(new Locale("pt-br"));
         Map<String,String> produto = new HashMap<>();
-        produto.put("nome",produtoFake.leagueOfLegends().champion());
-        produto.put("preco",produtoFake.number().digit());
+        produto.put("nome",produtoFake.animal().name());
+        produto.put("preco",produtoFake.number().digits(5));
         produto.put("descricao",produtoFake.leagueOfLegends().summonerSpell());
-        produto.put("quantidade",produtoFake.number().digit());
+        produto.put("quantidade",produtoFake.number().digits(5));
 
         given()
                 .contentType(ContentType.JSON)

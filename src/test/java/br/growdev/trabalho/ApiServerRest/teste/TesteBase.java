@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
 
 import static io.restassured.RestAssured.baseURI;
-@Slf4j
+
 public class TesteBase {
 
     @BeforeClass
